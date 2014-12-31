@@ -1,0 +1,8 @@
+name: NovaBungeeAnnouncer
+main: com.supersourmonkey.novabungeeannouncer.NovaBungeeAnnouncer
+version: 1.5.2
+author: supersourmonkey
+commands:
+   nbareload:
+      description: Reload NovaBungeeAnnouncer
+      usage: /nbareload
