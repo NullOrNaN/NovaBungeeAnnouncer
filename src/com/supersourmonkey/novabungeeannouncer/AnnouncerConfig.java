@@ -6,7 +6,6 @@ import java.util.HashMap;
 
 import net.cubespace.Yamler.Config.Comment;
 import net.cubespace.Yamler.Config.Config;
-import net.cubespace.Yamler.Config.ConfigSection;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public class AnnouncerConfig extends Config {
@@ -31,58 +30,12 @@ public class AnnouncerConfig extends Config {
 		public int offset;
 		public int delay;
 		public String permission;
-		public ArrayList<String> getServers() {
-			return servers;
-		}
-		public void setServers(ArrayList<String> servers) {
-			this.servers = servers;
-		}
-		public int getOffset() {
-			return offset;
-		}
-		public void setOffset(int offset) {
-			this.offset = offset;
-		}
-		public int getDelay() {
-			return delay;
-		}
-		public void setDelay(int delay) {
-			this.delay = delay;
-		}
-		public String getPermission() {
-			return permission;
-		}
-		public void setPermission(String permission) {
-			this.permission = permission;
-		}
-		public ArrayList<Announcement> getAnnouncements() {
-			return announcements;
-		}
-		public void setAnnouncements(ArrayList<Announcement> announcements) {
-			this.announcements = announcements;
-		}
 		public ArrayList<Announcement> announcements = new ArrayList<Announcement>();
 	}
 	public static class Announcement extends Config{
 		public String type;
 		public String message;
 		
-		public String getType() {
-			return type;
-		}
-
-		public void setType(String type) {
-			this.type = type;
-		}
-
-		public String getMessage() {
-			return message;
-		}
-
-		public void setMessage(String message) {
-			this.message = message;
-		}
-
 		public Announcement clone(){
 			Announcement clone = new Announcement();
 			clone.type = type + "";
@@ -95,24 +48,6 @@ public class AnnouncerConfig extends Config {
 	
 	public static class BroadcastMap extends Config{
 		public ArrayList<String> servers;
-		public ArrayList<String> getServers() {
-			return servers;
-		}
-		public void setServers(ArrayList<String> servers) {
-			this.servers = servers;
-		}
-		public String getPermission() {
-			return permission;
-		}
-		public void setPermission(String permission) {
-			this.permission = permission;
-		}
-		public Announcement getAnnouncement() {
-			return announcement;
-		}
-		public void setAnnouncement(Announcement announcement) {
-			this.announcement = announcement;
-		}
 		public String permission;
 		public Announcement announcement;
 	}
