@@ -13,6 +13,7 @@ public class AnnouncerConfig extends Config {
 		CONFIG_HEADER = new String[]{"NovaBungeeAnnouncer config file"};
 		CONFIG_FILE = new File(plugin.getDataFolder(), "NovaBungeeAnnouncer.yml");
 	}
+	public AnnouncerConfig(){	}
 	
 	@Comment("Order, either sequential or random")
 	public String order = "sequential";
