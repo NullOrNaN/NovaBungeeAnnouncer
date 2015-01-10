@@ -24,7 +24,7 @@ public class AnnouncerConfig extends Config {
 	public int permissionCacheTime = 0;
 	
 	@Comment("A list of announcements (See spigot page for usage)")
-	public HashMap<String, ConfigSection> servers = new HashMap<String, ConfigSection>();
+	public HashMap<String, MessageMap> servers = new HashMap<String, MessageMap>();
 
 	
 	public static class MessageMap extends ConfigSection{

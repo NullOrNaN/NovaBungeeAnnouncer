@@ -148,17 +148,18 @@ public class NovaBungeeAnnouncer extends Plugin implements Listener {
 			ArrayList<PlayerMessage> qms = new ArrayList<PlayerMessage>();
 			queue.put(pp.getName(), qms);
 		}
-
-		for(Entry<String, ConfigSection> s : config.servers.entrySet()){
+		System.out.println("Length of servers: " + config.servers.size());
+		for(Entry<String, MessageMap> s : config.servers.entrySet()){
 			String serverName = s.getKey();
 			System.out.println(s.getValue().getClass());
 			System.out.println(s.getValue().getRawMap().toString());
-			//MessageMap serverConfig = s.getValue();
-			//ScheduledTask task = getProxy().getScheduler().schedule(this, new AnnounceMessage(serverConfig, serverName), serverConfig.offset, serverConfig.delay, TimeUnit.SECONDS);
-			//System.out.println("New task scheduled with offset " + serverConfig.offset + " and delay " + serverConfig.delay);
-			//tasks.add(task);
-			//if(config.order.equals("random"))
-			//	Collections.shuffle(serverConfig.announcements);
+			System.out.println(s.getValue().get("message"));
+			MessageMap serverConfig = s.getValue();
+			ScheduledTask task = getProxy().getScheduler().schedule(this, new AnnounceMessage(serverConfig, serverName), serverConfig.offset, serverConfig.delay, TimeUnit.SECONDS);
+			System.out.println("New task scheduled with offset " + serverConfig.offset + " and delay " + serverConfig.delay);
+			tasks.add(task);
+			if(config.order.equals("random"))
+				Collections.shuffle(serverConfig.announcements);
 		}
 		if(config.servers.size()==0){
 			MessageMap example = new MessageMap();
