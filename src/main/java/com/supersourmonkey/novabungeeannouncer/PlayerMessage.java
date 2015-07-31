@@ -22,6 +22,7 @@ public class PlayerMessage {
 	ProxiedPlayer player = null;
 	String permission = "";
 	String type = "";
+	checkJson json = new checkJson();
 	
 	public PlayerMessage(String msg, ProxiedPlayer pp, String perm, String type){
 		message = msg;
@@ -53,7 +54,9 @@ public class PlayerMessage {
 
 		else if(type.equals("json")){
 			message = replaceValues(message);
-			player.unsafe().sendPacket(new Chat(message));
+			if (json.isValidJSON(message)) {
+				player.unsafe().sendPacket(new Chat(message));
+			}
 		}
 		else if(type.equals("multijson")){
 			message = replaceValues(message);
