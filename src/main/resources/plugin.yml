@@ -1,4 +1,4 @@
 name: NovaBungeeAnnouncer
-main: com.supersourmonkey.novabungeebukkit.NovaBungeeAnnouncer
+main: net.teamshadowmc.novabungeebukkit.NovaBungeeAnnouncer
 version: 1.6.0
-author: ['Amuxix', 'Fayettemat']
+author: TeamShadowMC
