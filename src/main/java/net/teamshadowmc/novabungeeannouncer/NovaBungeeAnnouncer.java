@@ -142,7 +142,7 @@ public class NovaBungeeAnnouncer extends Plugin implements Listener {
 		queue.clear();
 		perms.clear();
 
-		CheckJSON checkJSON = new CheckJSON();
+		checkJson checkJson = new checkJson();
 
 		Iterator<ProxiedPlayer> ppi = ProxyServer.getInstance().getPlayers().iterator();
 		while(ppi.hasNext()){
@@ -189,7 +189,7 @@ public class NovaBungeeAnnouncer extends Plugin implements Listener {
 
 					if (msgType.equalsIgnoreCase("json") || msgType.equalsIgnoreCase("multijson")) {
 
-						if (!(checkJSON.isValidJSON(msgMsg))) { //Oh no! Looks like the user has used an invalid JSON string!
+						if (!(checkJson.isValidJSON(msgMsg))) { //Oh no! Looks like the user has used an invalid JSON string!
 							getLogger().warning(String.format("Malformed JSON string found in servers.%s.message #%d!", serverName, (msgCount+1)));
 						}
 
@@ -219,7 +219,7 @@ public class NovaBungeeAnnouncer extends Plugin implements Listener {
 
 				if (ancType.equalsIgnoreCase("json") || ancType.equalsIgnoreCase("multijson")) {
 
-					if (!(checkJSON.isValidJSON(ancMsg))) { //Oh no! Looks like the user has used an invalid JSON string!
+					if (!(checkJson.isValidJSON(ancMsg))) { //Oh no! Looks like the user has used an invalid JSON string!
 						getLogger().warning(String.format("Malformed JSON string found in servers.%s.message!", serverName));
 					}
 				}

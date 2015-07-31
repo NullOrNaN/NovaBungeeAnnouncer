@@ -20,7 +20,7 @@ public class PlayerMessage {
 	ProxiedPlayer player = null;
 	String permission = "";
 	String type = "";
-	CheckJSON json = new CheckJSON();
+	checkJson json = new checkJson();
 	
 	public PlayerMessage(String msg, ProxiedPlayer pp, String perm, String type){
 		message = msg;
