@@ -45,7 +45,8 @@ public class NovaBungeeAnnouncer extends Plugin implements Listener {
 			config.save();
 			load();
 			config.save();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -67,10 +68,13 @@ public class NovaBungeeAnnouncer extends Plugin implements Listener {
 			ByteArrayDataInput in = ByteStreams.newDataInput(event.getData());
 			String playerName = in.readUTF();
 			String permissionValue = in.readUTF();
+
 			if(!perms.containsKey(playerName)){
 				perms.put(playerName, new ArrayList<String>());
 			}
+
 			perms.get(playerName).add(permissionValue);
+
 			if(permissionValue.startsWith("+")){
 				if(queue.containsKey(playerName)){
 					for(int i = 0; i < queue.get(playerName).size(); i++){
@@ -123,36 +127,42 @@ public class NovaBungeeAnnouncer extends Plugin implements Listener {
 	public void load(){
 		try {
 			config.load();
-		} catch (Exception e1) {
+		}
+		catch (Exception e1) {
 			e1.printStackTrace();
 		}
+
 		for(ScheduledTask task : tasks){
 			getProxy().getScheduler().cancel(this);
 			task.cancel();
 			task = null;
 		}
+
 		tasks.clear();
 		queue.clear();
 		perms.clear();
+
+		CheckJSON checkJSON = new CheckJSON();
+
 		Iterator<ProxiedPlayer> ppi = ProxyServer.getInstance().getPlayers().iterator();
 		while(ppi.hasNext()){
 			ProxiedPlayer pp = ppi.next();
 			ArrayList<PlayerMessage> qms = new ArrayList<PlayerMessage>();
 			queue.put(pp.getName(), qms);
 		}
-		System.out.println("Length of servers: " + config.servers.size());
+		//System.out.println("Length of servers: " + config.servers.size());
+
 		for(Entry<String, AnnouncerConfig.MessageMap> s : config.servers.entrySet()){
 			String serverName = s.getKey();
-			System.out.println(s.getValue().getClass());
-			System.out.println(s.getValue().getRawMap().toString());
-			System.out.println(s.getValue().get("message"));
 			AnnouncerConfig.MessageMap serverConfig = s.getValue();
+
 			ScheduledTask task = getProxy().getScheduler().schedule(this, new AnnounceMessage(serverConfig, serverName), serverConfig.offset, serverConfig.delay, TimeUnit.SECONDS);
 			System.out.println("New task scheduled with offset " + serverConfig.offset + " and delay " + serverConfig.delay);
 			tasks.add(task);
 			if(config.order.equals("random"))
 				Collections.shuffle(serverConfig.announcements);
 		}
+
 		if(config.servers.size()==0){
 			AnnouncerConfig.MessageMap example = new AnnouncerConfig.MessageMap();
 			example.offset = 0;
@@ -167,7 +177,29 @@ public class NovaBungeeAnnouncer extends Plugin implements Listener {
 			example.announcements.add(b);
 			config.servers.put("global", example);			
 		}
-		if(config.nonannouncements.size()==0){
+
+		else {
+			for(Entry<String, AnnouncerConfig.MessageMap> s : config.servers.entrySet()) {
+				String serverName = s.getKey();
+				AnnouncerConfig.MessageMap serverConfig = s.getValue();
+
+				for (int msgCount = 0; msgCount < serverConfig.announcements.size(); msgCount = msgCount+1) {
+					String msgType = serverConfig.announcements.get(msgCount).type;
+					String msgMsg = serverConfig.announcements.get(msgCount).message;
+
+					if (msgType.equalsIgnoreCase("json") || msgType.equalsIgnoreCase("multijson")) {
+
+						if (!(checkJSON.isValidJSON(msgMsg))) { //Oh no! Looks like the user has used an invalid JSON string!
+							getLogger().warning(String.format("Malformed JSON string found in servers.%s.message #%d!", serverName, (msgCount+1)));
+						}
+
+					}
+				}
+			}
+
+		}
+
+		if (config.nonannouncements.size()==0){
 			AnnouncerConfig.BroadcastMap bm = new AnnouncerConfig.BroadcastMap();
 			bm.announcement = new AnnouncerConfig.Announcement();
 			bm.announcement.message = "Hello, <user>";
@@ -177,7 +209,24 @@ public class NovaBungeeAnnouncer extends Plugin implements Listener {
 			bm.servers.add("global");
 			config.nonannouncements.put("demo", bm);
 		}
-		if(config.permissionCacheTime!=0){
+
+		else {
+			for (Entry<String, AnnouncerConfig.BroadcastMap> s : config.nonannouncements.entrySet()) {
+				String serverName = s.getKey();
+				AnnouncerConfig.BroadcastMap serverConfig = s.getValue();
+				String ancType = serverConfig.announcement.type;
+				String ancMsg = serverConfig.announcement.message;
+
+				if (ancType.equalsIgnoreCase("json") || ancType.equalsIgnoreCase("multijson")) {
+
+					if (!(checkJSON.isValidJSON(ancMsg))) { //Oh no! Looks like the user has used an invalid JSON string!
+						getLogger().warning(String.format("Malformed JSON string found in servers.%s.message!", serverName));
+					}
+				}
+			}
+		}
+
+		if (config.permissionCacheTime!=0){
 			getProxy().getScheduler().schedule(this, new Runnable() {
 				@Override
 				public void run() {
@@ -192,7 +241,8 @@ public class NovaBungeeAnnouncer extends Plugin implements Listener {
 
 		try {
 			config.save();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			System.out.println("Error saving default config values");
 			e.printStackTrace();
 		}
