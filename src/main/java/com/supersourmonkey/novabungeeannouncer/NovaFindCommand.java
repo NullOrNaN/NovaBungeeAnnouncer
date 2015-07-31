@@ -15,7 +15,7 @@ import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
-import net.md_5.bungee.command.ConsoleCommandSender;
+//import net.md_5.bungee.command.ConsoleCommandSender
 
 public class NovaFindCommand extends Command
 {
@@ -30,7 +30,7 @@ public class NovaFindCommand extends Command
   public void execute(final CommandSender sender, String[] args)
   {
 	
-	if(sender.hasPermission("nba.reload")||sender instanceof ConsoleCommandSender){
+	if(sender.hasPermission("nba.reload")||(!(sender instanceof ProxiedPlayer))){
 		sender.sendMessage("NovaBungeAnnouncer reloaded.");
 		NovaBungeeAnnouncer.instance.load();
 	}

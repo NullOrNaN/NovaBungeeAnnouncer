@@ -26,7 +26,7 @@ public class AnnouncerConfig extends Config {
 	@Comment("A list of announcements (See spigot page for usage)")
 	public HashMap<String, MessageMap> servers = new HashMap<String, MessageMap>();
 
-	
+
 	public static class MessageMap extends ConfigSection{
 		public ArrayList<String> servers;
 		public int offset;

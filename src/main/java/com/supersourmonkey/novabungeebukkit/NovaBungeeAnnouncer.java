@@ -13,6 +13,8 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
+import java.util.ArrayList;
+
 public class NovaBungeeAnnouncer extends JavaPlugin implements PluginMessageListener, Listener {
 	public static Permission permission = null;
 
@@ -55,7 +57,7 @@ public class NovaBungeeAnnouncer extends JavaPlugin implements PluginMessageList
 		  }
 
 		  // If you don't care about the player
-		  Player player = Bukkit.getOnlinePlayers()[0];
+		  Player player = new ArrayList<Player>(Bukkit.getOnlinePlayers()).get(0);
 		  // Else, specify them
 		  //Player player = Bukkit.getPlayerExact("Example");
 
