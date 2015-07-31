@@ -20,7 +20,7 @@ public class PlayerMessage {
 	ProxiedPlayer player = null;
 	String permission = "";
 	String type = "";
-	checkJson json = new checkJson();
+	CheckJSON json = new CheckJSON();
 	
 	public PlayerMessage(String msg, ProxiedPlayer pp, String perm, String type){
 		message = msg;
@@ -58,9 +58,11 @@ public class PlayerMessage {
 		}
 		else if(type.equals("multijson")){
 			message = replaceValues(message);
-			JSONArray jsa = new JSONArray(message);
-			for(int i = 0; i < jsa.length(); i++){
-				player.unsafe().sendPacket(new Chat(  (  (JSONObject)  jsa.get(i)  ).toString()  ));
+			if (json.isValidJSON(message)) {
+				JSONArray jsa = new JSONArray(message);
+				for (int i = 0; i < jsa.length(); i++) {
+					player.unsafe().sendPacket(new Chat(((JSONObject) jsa.get(i)).toString()));
+				}
 			}
 		}
 		else if (type.equals("title")){

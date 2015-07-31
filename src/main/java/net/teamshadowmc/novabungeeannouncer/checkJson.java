@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class checkJson {
+public class CheckJSON {
 
     public boolean isValidJSON(String jsonMsg) {
         return isValidObject(jsonMsg) || isValidArray(jsonMsg);
