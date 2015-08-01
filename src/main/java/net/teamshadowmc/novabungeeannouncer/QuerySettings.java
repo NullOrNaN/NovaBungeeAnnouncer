@@ -1,10 +1,10 @@
 package net.teamshadowmc.novabungeeannouncer;
 
-import java.io.File;
-
 import net.cubespace.Yamler.Config.Comment;
 import net.cubespace.Yamler.Config.Config;
 import net.md_5.bungee.api.plugin.Plugin;
+
+import java.io.File;
 
 public class QuerySettings extends Config {
 	public QuerySettings(Plugin plugin) {

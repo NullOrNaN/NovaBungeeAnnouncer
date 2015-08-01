@@ -1,9 +1,5 @@
 package net.teamshadowmc.novabungeeannouncer;
 
-//import net.md_5.bungee.api.chat.TextComponent;
-//import net.md_5.bungee.protocol.packet.Chat;
-
-
 public class AnnounceMessage implements Runnable{
 	public AnnouncerConfig.MessageMap server;
 	public String serverName;

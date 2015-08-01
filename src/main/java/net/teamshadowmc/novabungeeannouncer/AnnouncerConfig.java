@@ -1,13 +1,13 @@
 package net.teamshadowmc.novabungeeannouncer;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import net.cubespace.Yamler.Config.Comment;
 import net.cubespace.Yamler.Config.Config;
 import net.cubespace.Yamler.Config.ConfigSection;
 import net.md_5.bungee.api.plugin.Plugin;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AnnouncerConfig extends Config {
 	public AnnouncerConfig(Plugin plugin) {
