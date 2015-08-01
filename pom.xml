@@ -9,7 +9,7 @@
     <version>1.6.0-SNAPSHOT</version>
 
     <repositories>
-        <!-- Bungeecord/Bungeecord API -->
+        <!-- Bungeecord (API) -->
         <repository>
             <id>bungeecord-repo</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
@@ -38,6 +38,9 @@
     </repositories>
 
     <build>
+        <directory>${project.basedir}/target</directory>
+        <outputDirectory>${project.build.directory}/classes</outputDirectory>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
