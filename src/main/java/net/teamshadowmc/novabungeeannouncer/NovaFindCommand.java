@@ -1,6 +1,8 @@
 package net.teamshadowmc.novabungeeannouncer;
 
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
@@ -18,8 +20,18 @@ public class NovaFindCommand extends Command
   {
 	
 	if(sender.hasPermission("nba.reload")||(!(sender instanceof ProxiedPlayer))){
-		sender.sendMessage("NovaBungeAnnouncer reloaded.");
-		NovaBungeeAnnouncer.instance.load();
+
+        try {
+          NovaBungeeAnnouncer.instance.load();
+          TextComponent message = new TextComponent("NovaBungeAnnouncer reloaded.");
+          message.setColor(ChatColor.GOLD);
+          sender.sendMessage(message);
+        } catch (Exception ex) {
+          ex.printStackTrace();
+          TextComponent message = new TextComponent("NovaBungeAnnouncer failed to reload.");
+          message.setColor(ChatColor.RED);
+          sender.sendMessage(message);
+        }
 	}
 	
   }

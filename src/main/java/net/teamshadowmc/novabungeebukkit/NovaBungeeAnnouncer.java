@@ -23,8 +23,7 @@ public class NovaBungeeAnnouncer extends JavaPlugin implements PluginMessageList
 	    setupPermissions();
 	}
 	
-	public void onDisable(){
-		
+	public void onDisable() {
 	}
 	
 

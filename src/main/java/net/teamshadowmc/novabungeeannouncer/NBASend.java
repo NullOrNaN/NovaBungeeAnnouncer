@@ -20,8 +20,8 @@ public class NBASend extends Command
 		if(sender.hasPermission("nba.send")|| (!(sender instanceof ProxiedPlayer))||NovaBungeeAnnouncer.instance.perms.get(sender.getName()).contains("+nba.send")){
 			if(args.length>0){
 				if(plugin.config.nonannouncements.containsKey(args[0])){
-					AnnouncerConfig.BroadcastMap bm = plugin.config.nonannouncements.get(args[0]);
-					AnnouncerConfig.Announcement an = bm.announcement.clone();
+					NBAConfig.BroadcastMap bm = plugin.config.nonannouncements.get(args[0]);
+					NBAConfig.Announcement an = bm.announcement.clone();
 					for(int i = 1; i < args.length; i++){
 						an.message = an.message.replaceAll("<<"+i+">>", args[i]);
 					}

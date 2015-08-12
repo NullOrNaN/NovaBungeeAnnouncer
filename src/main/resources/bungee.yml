@@ -6,3 +6,6 @@ commands:
    nbareload:
       description: Reload NovaBungeeAnnouncer
       usage: /nbareload
+   nbaset:
+      description: Set some config options for NovaBungeeAnnouncer
+      usage: /nbaset config_opton value

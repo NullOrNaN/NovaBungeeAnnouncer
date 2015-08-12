@@ -1,11 +1,11 @@
 package net.teamshadowmc.novabungeeannouncer;
 
 public class AnnounceMessage implements Runnable{
-	public AnnouncerConfig.MessageMap server;
+	public NBAConfig.MessageMap server;
 	public String serverName;
 	public int nextAnnounce = 0;
 
-	public AnnounceMessage(AnnouncerConfig.MessageMap server, String serverName){
+	public AnnounceMessage(NBAConfig.MessageMap server, String serverName){
 		this.server = server;
 		this.serverName = serverName;
 	}
@@ -18,7 +18,7 @@ public class AnnounceMessage implements Runnable{
 			if(server.announcements.size()<=nextAnnounce){
 				nextAnnounce = 0;
 			}
-			AnnouncerConfig.Announcement toSay = server.announcements.get(nextAnnounce);
+			NBAConfig.Announcement toSay = server.announcements.get(nextAnnounce);
 			PlayerMessage.announceAnnouncement(toSay, serverName, server.servers, server.permission);
 			nextAnnounce++;
 		}

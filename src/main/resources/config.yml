@@ -1,0 +1,66 @@
+### I recommend setting this as false unless debuging or testing
+debug:
+  enabled: false
+  level: low
+
+## Order, either sequential or random ##
+order: sequential
+
+## Permission messages setup ##
+### Set this to the server that you want to get permissions from
+permissionServer: lobby
+### How often the permissions cache is cleared in minutes. (0=never)
+permissionCacheTime: 0
+
+
+## Automated announcements
+servers:
+  ### You can have them globally
+  global:
+      servers: null
+      announcements:
+      - message: "This is an announcement message"
+        type: text
+      ### You can use color in your automated announcements
+      - message: "&aThis is an announcement message with color"
+        type: text
+      ### You can even use multiple lines!
+      - message: 'Want more than one line? /nHow does 2 sound?'
+        type: multitext
+      - message: '{"text":"A simple json message in gold","color":"gold"}'
+        type: json
+      ### Configurable delay (in seconds) between messages (default is 60)
+      delay: 60
+      ### Do you need a special permission to see these (default is null which means no)
+      permission: null
+      ### Offset how many seconds to offset the cycle from the other announcements (default is 0)
+      offset: 0
+  ### Giving just the server name here will only send to that server!
+  lobby:
+    servers: null
+    announcements:
+    - message: "This message is only shown in the lobby server"
+      type: text
+    delay: 60
+    offset: 30
+  ### Or you can set up groups of servres. Note the servers block below with their names
+  HungerGamesServers:
+     announcements:
+     - message: "You are playing hunger games on play.your-server.com"
+       type: text
+     delay: 60
+     offset: 30
+     servers:
+     - hunger1
+     - hunger2
+     - hunger3
+### These aren't standard announcements, they are triggered by a ocmmand
+nonannouncements:
+   demo:
+     message: '{"text":"Run this message by typing /nbasend demo","color":"gold"}'
+     permission: ''
+     type: json
+   donor:
+     message: '{"text":"Please welcome our newest donor <<1>>!","color":"gold"}'
+     permission: yourperm.donor
+     type: json

@@ -12,18 +12,20 @@ import net.md_5.bungee.api.event.ServerKickEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.scheduler.ScheduledTask;
+import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 public class NovaBungeeAnnouncer extends Plugin implements Listener {
-	public static AnnouncerConfig config;
+	//public static AnnouncerConfig config;
+	public static NBAConfig config;
+
 	public static NovaBungeeAnnouncer instance;
+
 	ArrayList<ScheduledTask> tasks = new ArrayList<ScheduledTask>();
 	public static HashMap<String, ArrayList<String>> perms = new HashMap<String, ArrayList<String>>();
 
@@ -31,33 +33,38 @@ public class NovaBungeeAnnouncer extends Plugin implements Listener {
 
 	public static HashMap<String, PlayerMessage> queBroadcast = new HashMap<String, PlayerMessage>();
 
+	private boolean debug = true;
+
+	private Utils util;
+
 	@Override
 	public void onEnable() {
 		instance = this;
 		ProxyServer.getInstance().getPluginManager().registerListener(this, this);
-		ProxyServer.getInstance().getPluginManager().registerCommand(this, new NovaFindCommand("nbareload",this));
-		ProxyServer.getInstance().getPluginManager().registerCommand(this, new NBASend("nbasend",this));
+		ProxyServer.getInstance().getPluginManager().registerCommand(this, new NovaFindCommand("nbareload", this));
+		ProxyServer.getInstance().getPluginManager().registerCommand(this, new NBASend("nbasend", this));
+		ProxyServer.getInstance().getPluginManager().registerCommand(this, new NBASet("nbaset", this));
 		ProxyServer.getInstance().registerChannel("NBA");
-		config = new AnnouncerConfig(this);
-		try {
-			config.init();
-			config.save();
-			load();
-			config.save();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+
+		config = new NBAConfig(this);
+		util = new Utils(this);
+		load();
 
 	}
 	@Override
-	public void onDisable(){
-		//getProxy().getScheduler().cancel(this);
-		//for(ScheduledTask task : tasks){
-		//	getProxy().getScheduler().cancel(task);
-		//	//task.cancel();
-		//}
-		//tasks.clear();
+	public void onDisable() {
+		for (ScheduledTask task : tasks) {
+			getProxy().getScheduler().cancel(this);
+			task.cancel();
+			task = null;
+		}
+
+		tasks.clear();
+		queue.clear();
+		perms.clear();
+
+		getProxy().getPluginManager().unregisterCommands(this);
+
 	}
 
 	@EventHandler
@@ -122,16 +129,22 @@ public class NovaBungeeAnnouncer extends Plugin implements Listener {
 		}
 	}
 
-
-	public void load(){
+	public void load() {
+		if (debug) {
+			util.log("[DEBUG] Loading our config");
+			util.log("[DEBUG] This will show up on plugin startup and if you have debug.enable set to true");
+		}
 		try {
-			config.load();
+			config.loadCfg();
+			if (debug) util.log("[DEBUG] Loaded config.yml. Starting plugin routines!");
+			start();
+		} catch (NullPointerException ex) {
+			ex.printStackTrace();
 		}
-		catch (Exception e1) {
-			e1.printStackTrace();
-		}
+	}
+	public void start() {
 
-		for(ScheduledTask task : tasks){
+		for (ScheduledTask task : tasks) {
 			getProxy().getScheduler().cancel(this);
 			task.cancel();
 			task = null;
@@ -144,87 +157,58 @@ public class NovaBungeeAnnouncer extends Plugin implements Listener {
 		checkJson checkJson = new checkJson();
 
 		Iterator<ProxiedPlayer> ppi = ProxyServer.getInstance().getPlayers().iterator();
-		while(ppi.hasNext()){
+		while (ppi.hasNext()) {
 			ProxiedPlayer pp = ppi.next();
 			ArrayList<PlayerMessage> qms = new ArrayList<PlayerMessage>();
 			queue.put(pp.getName(), qms);
 		}
-		//System.out.println("Length of servers: " + config.servers.size());
 
-		for(Entry<String, AnnouncerConfig.MessageMap> s : config.servers.entrySet()){
+
+		for (Entry<String, NBAConfig.MessageMap> s : config.servers.entrySet()) {
 			String serverName = s.getKey();
-			AnnouncerConfig.MessageMap serverConfig = s.getValue();
+			NBAConfig.MessageMap serverConfig = s.getValue();
 
 			ScheduledTask task = getProxy().getScheduler().schedule(this, new AnnounceMessage(serverConfig, serverName), serverConfig.offset, serverConfig.delay, TimeUnit.SECONDS);
 			System.out.println("New task scheduled with offset " + serverConfig.offset + " and delay " + serverConfig.delay);
 			tasks.add(task);
-			if(config.order.equals("random"))
+			/*
+			if (config.getConfigString("order").equalsIgnoreCase("random")) {
 				Collections.shuffle(serverConfig.announcements);
-		}
-
-		if(config.servers.size()==0){
-			AnnouncerConfig.MessageMap example = new AnnouncerConfig.MessageMap();
-			example.offset = 0;
-			example.delay = 60;
-			AnnouncerConfig.Announcement a = new AnnouncerConfig.Announcement();
-			a.message = "Just a simple text announcement message";
-			a.type = "text";
-			AnnouncerConfig.Announcement b = new AnnouncerConfig.Announcement();
-			b.message = "{\"text\":\"A simple json message\",\"color\":\"gold\"}";
-			b.type = "json";
-			example.announcements.add(a);
-			example.announcements.add(b);
-			config.servers.put("global", example);			
-		}
-
-		else {
-			for(Entry<String, AnnouncerConfig.MessageMap> s : config.servers.entrySet()) {
-				String serverName = s.getKey();
-				AnnouncerConfig.MessageMap serverConfig = s.getValue();
-
-				for (int msgCount = 0; msgCount < serverConfig.announcements.size(); msgCount = msgCount+1) {
-					String msgType = serverConfig.announcements.get(msgCount).type;
-					String msgMsg = serverConfig.announcements.get(msgCount).message;
-
-					if (msgType.equalsIgnoreCase("json") || msgType.equalsIgnoreCase("multijson")) {
-
-						if (!(checkJson.isValidJSON(msgMsg))) { //Oh no! Looks like the user has used an invalid JSON string!
-							getLogger().warning(String.format("Malformed JSON string found in servers.%s.message #%d!", serverName, (msgCount+1)));
-						}
-
-					}
-				}
 			}
-
+			*/
 		}
 
-		if (config.nonannouncements.size()==0){
-			AnnouncerConfig.BroadcastMap bm = new AnnouncerConfig.BroadcastMap();
-			bm.announcement = new AnnouncerConfig.Announcement();
-			bm.announcement.message = "Hello, <user>";
-			bm.permission = "super.op";
-			bm.announcement.type="text";
-			bm.servers = new ArrayList<String>();
-			bm.servers.add("global");
-			config.nonannouncements.put("demo", bm);
+		if (config.servers.size() == 0 || config.nonannouncements.size() == 0) {
+			getLogger().severe("The formatting seems to be all wrong!");
 		}
+		else for (Entry<String, NBAConfig.MessageMap> s : config.servers.entrySet()) {
+			String serverName = s.getKey();
+			NBAConfig.MessageMap serverConfig = s.getValue();
 
-		else {
-			for (Entry<String, AnnouncerConfig.BroadcastMap> s : config.nonannouncements.entrySet()) {
-				String serverName = s.getKey();
-				AnnouncerConfig.BroadcastMap serverConfig = s.getValue();
-				String ancType = serverConfig.announcement.type;
-				String ancMsg = serverConfig.announcement.message;
+			for (int msgCount = 0; msgCount < serverConfig.announcements.size(); msgCount = msgCount + 1) {
+				String msgType = serverConfig.announcements.get(msgCount).type;
+				String msgMsg = serverConfig.announcements.get(msgCount).message;
 
-				if (ancType.equalsIgnoreCase("json") || ancType.equalsIgnoreCase("multijson")) {
-
-					if (!(checkJson.isValidJSON(ancMsg))) { //Oh no! Looks like the user has used an invalid JSON string!
-						getLogger().warning(String.format("Malformed JSON string found in servers.%s.message!", serverName));
+				if (msgType.equalsIgnoreCase("json") || msgType.equalsIgnoreCase("multijson")) {
+					if (!(checkJson.isValidJSON(msgMsg))) {
+						getLogger().warning(String.format("Malformed JSON formatting found in servers.%s in message #%d", serverName, (msgCount + 1)));
 					}
 				}
 			}
 		}
+		for (Entry<String, NBAConfig.BroadcastMap> s : config.nonannouncements.entrySet()) {
+			String serverName = s.getKey();
+			NBAConfig.BroadcastMap serverConfig = s.getValue();
+			String ancType = serverConfig.announcement.type;
+			String ancMsg = serverConfig.announcement.message;
 
+			if (ancType.equalsIgnoreCase("json") || ancType.equalsIgnoreCase("multijson")) {
+
+				if (!(checkJson.isValidJSON(ancMsg))) { //Oh no! Looks like the user has used an invalid JSON string!
+					getLogger().warning(String.format("Malformed JSON formatting found in servers.%s.message!", serverName));
+				}
+			}
+		}
 		if (config.permissionCacheTime!=0){
 			getProxy().getScheduler().schedule(this, new Runnable() {
 				@Override
@@ -237,13 +221,6 @@ public class NovaBungeeAnnouncer extends Plugin implements Listener {
 				}
 			}, 0, config.permissionCacheTime, TimeUnit.MINUTES);
 		}
-
-		try {
-			config.save();
-		}
-		catch (Exception e) {
-			System.out.println("Error saving default config values");
-			e.printStackTrace();
-		}
 	}
+
 }

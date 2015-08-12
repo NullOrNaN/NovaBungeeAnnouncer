@@ -27,7 +27,7 @@ public class PlayerMessage {
 		permission = perm;
 	}
 	
-	public PlayerMessage(AnnouncerConfig.Announcement anc, ProxiedPlayer pp, String perm){
+	public PlayerMessage(NBAConfig.Announcement anc, ProxiedPlayer pp, String perm){
 		message = anc.message;
 		type = anc.type;
 		player = pp;
@@ -87,7 +87,7 @@ public class PlayerMessage {
 		}
 	}
 	
-	public static void announceAnnouncement(AnnouncerConfig.Announcement toSay, String serverName, ArrayList<String> servers, String permission){
+	public static void announceAnnouncement(NBAConfig.Announcement toSay, String serverName, ArrayList<String> servers, String permission){
 		if(serverName.equals("global")||servers!=null&&servers.contains("global")){
 			for(ProxiedPlayer p : ProxyServer.getInstance().getPlayers()){
 				PlayerMessage pm = new PlayerMessage(toSay, p, permission);
@@ -123,7 +123,7 @@ public class PlayerMessage {
 	}
 	
 
-	public static void sendAll(AnnouncerConfig.Announcement message){
+	public static void sendAll( NBAConfig.Announcement message){
 		Iterator<ProxiedPlayer> ppi = ProxyServer.getInstance().getPlayers().iterator();
 		while(ppi.hasNext()){
 			ProxiedPlayer pp = ppi.next();
@@ -191,8 +191,8 @@ public class PlayerMessage {
 	
 	public static void sendEvent(String eventName, String arg){
 		if(NovaBungeeAnnouncer.config.nonannouncements.containsKey(eventName)){
-			AnnouncerConfig.BroadcastMap bm = NovaBungeeAnnouncer.config.nonannouncements.get(eventName);
-			AnnouncerConfig.Announcement an = bm.announcement.clone();
+			NBAConfig.BroadcastMap bm = NovaBungeeAnnouncer.config.nonannouncements.get(eventName);
+			NBAConfig.Announcement an = bm.announcement.clone();
 			an.message = an.message.replaceAll("<<1>>", arg);
 			PlayerMessage.announceAnnouncement(an, "", bm.servers, bm.permission);
 		}
