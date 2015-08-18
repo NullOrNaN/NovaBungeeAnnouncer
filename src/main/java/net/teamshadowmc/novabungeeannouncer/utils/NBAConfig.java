@@ -1,4 +1,4 @@
-package net.teamshadowmc.novabungeeannouncer;
+package net.teamshadowmc.novabungeeannouncer.utils;
 
 import com.google.common.io.ByteStreams;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -7,7 +7,6 @@ import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 
 import java.io.*;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;

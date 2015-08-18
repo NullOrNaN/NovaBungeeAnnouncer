@@ -1,4 +1,4 @@
-package net.teamshadowmc.novabungeeannouncer;
+package net.teamshadowmc.novabungeeannouncer.utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;

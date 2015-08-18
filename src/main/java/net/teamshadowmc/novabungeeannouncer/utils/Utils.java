@@ -1,8 +1,8 @@
 
-package net.teamshadowmc.novabungeeannouncer;
+package net.teamshadowmc.novabungeeannouncer.utils;
 
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.teamshadowmc.novabungeeannouncer.utils.NBAConfig;
 
 import java.util.logging.Level;
 

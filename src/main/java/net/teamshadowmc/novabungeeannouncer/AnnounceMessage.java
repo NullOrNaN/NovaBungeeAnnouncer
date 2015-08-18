@@ -1,5 +1,7 @@
 package net.teamshadowmc.novabungeeannouncer;
 
+import net.teamshadowmc.novabungeeannouncer.utils.NBAConfig;
+
 public class AnnounceMessage implements Runnable{
 	public NBAConfig.MessageMap server;
 	public String serverName;

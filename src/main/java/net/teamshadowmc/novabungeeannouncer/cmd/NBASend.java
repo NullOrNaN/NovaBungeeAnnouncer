@@ -1,8 +1,11 @@
-package net.teamshadowmc.novabungeeannouncer;
+package net.teamshadowmc.novabungeeannouncer.cmd;
 
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
+import net.teamshadowmc.novabungeeannouncer.NovaBungeeAnnouncer;
+import net.teamshadowmc.novabungeeannouncer.PlayerMessage;
+import net.teamshadowmc.novabungeeannouncer.utils.NBAConfig;
 
 
 public class NBASend extends Command

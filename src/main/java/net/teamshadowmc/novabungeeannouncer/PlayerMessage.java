@@ -8,6 +8,8 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.protocol.packet.Chat;
+import net.teamshadowmc.novabungeeannouncer.utils.NBAConfig;
+import net.teamshadowmc.novabungeeannouncer.utils.checkJson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
