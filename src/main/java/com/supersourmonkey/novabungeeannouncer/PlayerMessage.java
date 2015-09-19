@@ -2,6 +2,7 @@ package com.supersourmonkey.novabungeeannouncer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 import com.supersour.json.JSONArray;
 import com.supersour.json.JSONObject;
@@ -23,8 +24,9 @@ public class PlayerMessage {
 	String permission = "";
 	String type = "";
 	checkJson json = new checkJson();
-	
-	public PlayerMessage(String msg, ProxiedPlayer pp, String perm, String type){
+    Logger logger = ProxyServer.getInstance().getLogger();
+
+    public PlayerMessage(String msg, ProxiedPlayer pp, String perm, String type){
 		message = msg;
 		player = pp;
 		permission = perm;
@@ -186,8 +188,32 @@ public class PlayerMessage {
 	}
 	
 	public String replaceValues(String input){
-		input = input.replaceAll("%playername%", player.getName());
-		return input;
+        try {
+            input = input.replaceAll("%playername%", player.getName());
+            return input;
+
+        }
+        catch (NullPointerException npe) {
+            logger.severe("Failed to get a player's name!");
+            try {
+                if (player != null) {
+                    boolean foundPlayer = false;
+                    for(ProxiedPlayer pp : ProxyServer.getInstance().getPlayers()) {
+                        if (player.equals(pp)) {
+                            foundPlayer = true;
+                            logger.info("[Debug] Player found.");
+                        }
+                    }
+                    if (!foundPlayer) {
+                        logger.info("[DEBUG] Couldn't located the player passed");
+                    }
+                }
+            }
+            catch (Exception ex) {
+                logger.severe("Looks like a server might be down!");
+            }
+        }
+        return "player";
 	}
 	
 	public static void sendEvent(String eventName, String arg){
