@@ -1,7 +1,7 @@
 name: NovaBungeeAnnouncer
 main: com.supersourmonkey.novabungeeannouncer.NovaBungeeAnnouncer
-version: 1.6.0
-author: ['Amuxix', 'Fayettemat']
+version: 1.5.4-SNAPSHOT
+author: TeamShadowMC
 commands:
    nbareload:
       description: Reload NovaBungeeAnnouncer
