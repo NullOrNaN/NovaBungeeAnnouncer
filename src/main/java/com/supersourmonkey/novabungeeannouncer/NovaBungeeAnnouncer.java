@@ -7,11 +7,10 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.util.Vector;
+import com.supersourmonkey.novabungeeannouncer.cmd.NBASend;
+import com.supersourmonkey.novabungeeannouncer.cmd.NBAVersion;
 
-import net.cubespace.Yamler.Config.ConfigSection;
+import com.supersourmonkey.novabungeeannouncer.cmd.NovaFindCommand;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
@@ -44,8 +43,9 @@ public class NovaBungeeAnnouncer extends Plugin implements Listener {
 	public void onEnable() {
 		instance = this;
 		ProxyServer.getInstance().getPluginManager().registerListener(this, this);
-		ProxyServer.getInstance().getPluginManager().registerCommand(this, new NovaFindCommand("nbareload",this));
+		ProxyServer.getInstance().getPluginManager().registerCommand(this, new NovaFindCommand("nbareload", this));
 		ProxyServer.getInstance().getPluginManager().registerCommand(this, new NBASend("nbasend",this));
+		ProxyServer.getInstance().getPluginManager().registerCommand(this, new NBAVersion("nbaversion", this));
 		ProxyServer.getInstance().registerChannel("NBA");
 		config = new AnnouncerConfig(this);
 		try {

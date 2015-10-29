@@ -6,7 +6,7 @@
 
     <groupId>com.supersourmonkey</groupId>
     <artifactId>NovaBungeeAnnouncer</artifactId>
-    <version>1.5-SNAPSHOT</version>
+    <version>1.6.0</version>
 
     <repositories>
         <repository>
@@ -25,6 +25,7 @@
             <id>md_5-snapshots</id>
             <url>http://repo.md-5.net/content/repositories/snapshots/</url>
         </repository>
+
     </repositories>
 
     <build>
@@ -72,6 +73,12 @@
             <groupId>net.cubespace</groupId>
             <artifactId>Yamler-Bungee</artifactId>
             <version>2.3.0-SNAPSHOT</version>
+        </dependency>
+        <!-- GSON -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.4</version>
         </dependency>
     </dependencies>
 </project>

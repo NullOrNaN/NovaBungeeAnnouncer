@@ -1,4 +1,4 @@
-package com.supersourmonkey.novabungeeannouncer;
+package com.supersourmonkey.novabungeeannouncer.cmd;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import com.supersourmonkey.novabungeeannouncer.AnnouncerConfig.Announcement;
 
+import com.supersourmonkey.novabungeeannouncer.NovaBungeeAnnouncer;
 import net.cubespace.Yamler.Config.InvalidConfigurationException;
 import net.md_5.bungee.api.Callback;
 import net.md_5.bungee.api.ChatColor;
