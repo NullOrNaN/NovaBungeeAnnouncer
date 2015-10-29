@@ -22,7 +22,7 @@ public class NBAVersion extends Command {
     String currentVer;
     String pName;
     String branch = "stable";
-    String uri = "https://localhost:8080/nba.json";
+    String uri = "https://raw.githubusercontent.com/MatthewM/NovaBungeeAnnouncer/master/nba.json";
     String downloadURL = "https://www.spigotmc.org/resources/novabungeeannouncer.788";
 
     NovaBungeeAnnouncer plugin;
