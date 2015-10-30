@@ -6,7 +6,9 @@
 
     <groupId>com.supersourmonkey</groupId>
     <artifactId>NovaBungeeAnnouncer</artifactId>
-    <version>1.6.0</version>
+    <!-- ${env.GIT_COMMIT} is a Jenkins set variable! -->
+    <version>1.6.1-git-${env.GIT_COMMIT}</version>
+    <name>NovaBungeeAnnouncer</name>
 
     <repositories>
         <repository>
@@ -29,6 +31,24 @@
     </repositories>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>plugin.yml</include>
+                    <include>bungee.yml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>plugin.yml</exclude>
+                    <exclude>bungee.yml</exclude>
+                </excludes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

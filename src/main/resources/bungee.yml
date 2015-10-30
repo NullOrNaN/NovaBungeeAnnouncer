@@ -1,6 +1,6 @@
-name: NovaBungeeAnnouncer
+name: ${name}
 main: com.supersourmonkey.novabungeeannouncer.NovaBungeeAnnouncer
-version: 1.6.0
+version: ${version}
 author: TeamShadowMC
 commands:
    nbareload:

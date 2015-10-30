@@ -1,4 +1,4 @@
-name: NovaBungeeAnnouncer
+name: ${name}
 main: com.supersourmonkey.novabungeebukkit.NovaBungeeAnnouncer
-version: 1.6.0
+version: ${version}
 author: TeamShadowMC
