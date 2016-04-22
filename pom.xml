@@ -7,7 +7,7 @@
     <groupId>com.supersourmonkey</groupId>
     <artifactId>NovaBungeeAnnouncer</artifactId>
     <!-- ${env.GIT_COMMIT} is a Jenkins set variable! -->
-    <version>1.6.1-git-${env.GIT_COMMIT}</version>
+    <version>1.6.0-SNAPSHOT</version>
     <name>NovaBungeeAnnouncer</name>
 
     <repositories>
