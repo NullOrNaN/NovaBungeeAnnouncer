@@ -1,7 +1,7 @@
 name: ${name}
-main: com.supersourmonkey.novabungeeannouncer.NovaBungeeAnnouncer
+main: net.mcflux.nba.bungee.NovaBungeeAnnouncer
 version: ${version}
-author: TeamShadowMC
+author: Fayettemat
 commands:
    nbareload:
       description: Reload NovaBungeeAnnouncer

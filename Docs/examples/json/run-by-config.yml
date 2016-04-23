@@ -8,7 +8,7 @@ permissionServer: hub
 permissionCacheTime: 0
 # A list of announcements (See spigot page for usage)
 servers:
-  hub: !!com.supersourmonkey.novabungeeannouncer.AnnouncerConfig$MessageMap
+  hub: !!AnnouncerConfig$MessageMap
     announcements:
     - message: '[{"text":"/ ","color":"blue","bold":true},{"text":"// ","color":"aqua","bold":true},{"text":">> ","color":"dark_gray","bold":false},{"text":"is run by, ","color":"yellow"},{"text":"[placeholder]","color":"aqua"}]'
       type: json
@@ -17,7 +17,7 @@ servers:
    permission: null
    servers: null
 nonannouncements:
-  demo: !!com.supersourmonkey.novabungeeannouncer.AnnouncerConfig$BroadcastMap
+  demo: !!AnnouncerConfig$BroadcastMap
     announcement:
       message: Hello, <user>
       type: text
