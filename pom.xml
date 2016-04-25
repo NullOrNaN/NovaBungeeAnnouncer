@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.mcflux.nba</groupId>
+    <groupId>net.teamshadowmc.nba</groupId>
     <artifactId>NovaBungeeAnnouncer</artifactId>
     <!-- ${env.GIT_COMMIT} is a Jenkins set variable! -->
     <version>1.6.0-SNAPSHOT</version>
@@ -27,10 +27,12 @@
             <id>md_5-snapshots</id>
             <url>http://repo.md-5.net/content/repositories/snapshots/</url>
         </repository>
+        <!--
         <repository>
             <id>bungeecord-repo</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
+        -->
     </repositories>
 
     <build>
@@ -67,10 +69,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>net.md-5</groupId>
-            <artifactId>bungeecord-api</artifactId>
-            <version>LATEST</version>
-            <type>jar</type>
+            <groupId>io.github.waterfallmc</groupId>
+            <artifactId>waterfall-api</artifactId>
+            <version>1.9-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -80,8 +81,8 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.destroytokyo.paper</groupId>
-            <artifactId>Paper-API</artifactId>
+            <groupId>com.destroystokyo.paper</groupId>
+            <artifactId>paper-api</artifactId>
             <version>LATEST</version>
             <scope>provided</scope>
         </dependency>

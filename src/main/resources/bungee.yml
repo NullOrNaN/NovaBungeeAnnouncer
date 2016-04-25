@@ -1,5 +1,5 @@
 name: ${name}
-main: net.mcflux.nba.bungee.NovaBungeeAnnouncer
+main: net.teamshadowmc.nba.bungee.NovaBungeeAnnouncer
 version: ${version}
 author: Fayettemat
 commands:
