@@ -6,8 +6,7 @@
 
     <groupId>com.supersourmonkey</groupId>
     <artifactId>NovaBungeeAnnouncer</artifactId>
-    <!-- ${env.GIT_COMMIT} is a Jenkins set variable! -->
-    <version>1.6.1-git-${env.GIT_COMMIT}</version>
+    <version>1.6.1-SNAPSHOT</version>
     <name>NovaBungeeAnnouncer</name>
 
     <repositories>
@@ -17,7 +16,7 @@
         </repository>
         <repository>
             <id>vault-repo</id>
-            <url>http://nexus.theyeticave.net/content/repositories/pub_releases</url>
+            <url>http://nexus.hc.to/content/repositories/pub_releases</url>
         </repository>
         <repository>
             <id>spigot-repo</id>
@@ -73,20 +72,20 @@
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>VaultAPI</artifactId>
-            <version>1.5</version>
+            <version>1.6</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <version>LATEST</version>
             <scope>provided</scope>
         </dependency>
         <!--Bukkit API-->
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <version>LATEST</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
